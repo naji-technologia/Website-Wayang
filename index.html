@@ -1,0 +1,971 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Warisan Wayang Jawa: Jelajahi Tokoh Ikonik</title>
+    
+    <!-- Tailwind CSS for base styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lora:wght@400;700&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Custom Stylesheet -->
+    <style>
+        /* Custom styles to complement Tailwind */
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f3e9d2; /* Warna krem lembut */
+            color: #3d2c21; /* Coklat tua */
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Lora', serif;
+        }
+
+        .javanese-bg {
+            /* Latar belakang untuk halaman dashboard/konten */
+            background-image: linear-gradient(rgba(243, 233, 210, 0.95), rgba(243, 233, 210, 0.95)), url('https://static.vecteezy.com/system/resources/thumbnails/000/193/158/small_2x/GUNUNGAN_WAYANG.jpg');
+            background-attachment: fixed;
+            background-size: cover;
+            background-position: center;
+        }
+
+        .landing-bg {
+            /* Latar belakang untuk halaman awal */
+            background-image: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://static.vecteezy.com/system/resources/thumbnails/000/193/158/small_2x/GUNUNGAN_WAYANG.jpg');
+            background-size: cover;
+            background-position: center;
+        }
+
+        .cursor-sparkle {
+            position: fixed;
+            width: 10px;
+            height: 10px;
+            background: gold;
+            border-radius: 50%;
+            pointer-events: none;
+            transform: translate(-50%, -50%);
+            transition: transform 0.1s ease, width 0.2s ease, height 0.2s ease;
+            z-index: 9999;
+            box-shadow: 0 0 15px 5px gold, 0 0 25px 10px rgba(255, 215, 0, 0.5);
+            opacity: 0;
+        }
+
+        .hidden { display: none; }
+
+        .btn-primary {
+            background-color: #8B4513;
+            color: white;
+            font-weight: bold;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.5rem;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            transform: scale(1);
+            transition: transform 300ms;
+        }
+        .btn-primary:hover { background-color: #A0522D; transform: scale(1.05); }
+
+        .card-hover { transition: all 300ms ease-in-out; }
+        .card-hover:hover { transform: scale(1.05); box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1); }
+
+        .progress-bar-fill { background: linear-gradient(to right, #fbbf24, #d97706); height: 100%; border-radius: 9999px; transition: all 500ms; }
+
+        .motif-item { cursor: pointer; padding: 0.5rem; border: 1px solid rgba(140, 69, 19, 0.2); border-radius: 0.375rem; transition: background-color 150ms; }
+        .motif-item:hover { background-color: rgba(140, 69, 19, 0.1); }
+        
+        .weapon-card { background-color: rgba(255, 255, 255, 0.5); border: 1px solid rgba(140, 69, 19, 0.2); border-radius: 0.5rem; padding: 0.75rem; margin-top: 0.5rem; }
+
+        .quiz-option { display: block; width: 100%; text-align: left; padding: 0.75rem; margin-top: 0.5rem; margin-bottom: 0.5rem; border: 2px solid #b45309; border-radius: 0.5rem; transition: background-color 200ms; }
+        .quiz-option:hover { background-color: #fde68a; }
+        
+        /* Silsilah (Family Tree) Styles */
+        .tree ul {
+            padding-top: 20px; position: relative;
+            transition: all 0.5s;
+        }
+        .tree li {
+            float: left; text-align: center;
+            list-style-type: none;
+            position: relative;
+            padding: 20px 5px 0 5px;
+            transition: all 0.5s;
+        }
+        .tree li::before, .tree li::after{
+            content: '';
+            position: absolute; top: 0; right: 50%;
+            border-top: 2px solid #a0522d;
+            width: 50%; height: 20px;
+        }
+        .tree li::after{
+            right: auto; left: 50%;
+            border-left: 2px solid #a0522d;
+        }
+        .tree li:only-child::after, .tree li:only-child::before {
+            display: none;
+        }
+        .tree li:only-child{ padding-top: 0;}
+        .tree li:first-child::before, .tree li:last-child::after{
+            border: 0 none;
+        }
+        .tree li:last-child::before{
+            border-right: 2px solid #a0522d;
+            border-radius: 0 5px 0 0;
+        }
+        .tree li:first-child::after{
+            border-radius: 5px 0 0 0;
+        }
+        .tree ul ul::before{
+            content: '';
+            position: absolute; top: 0; left: 50%;
+            border-left: 2px solid #a0522d;
+            width: 0; height: 20px;
+        }
+        .tree li a{
+            border: 2px solid #a0522d;
+            padding: 5px 10px;
+            text-decoration: none;
+            color: #3d2c21;
+            font-family: 'Poppins',sans-serif;
+            font-size: 14px;
+            display: inline-block;
+            border-radius: 5px;
+            transition: all 0.5s;
+            background-color: #fff;
+        }
+        .tree li a:hover, .tree li a:hover+ul li a {
+            background: #fde68a; color: #3d2c21;
+        }
+        .tree li a:hover+ul li::after, 
+        .tree li a:hover+ul li::before, 
+        .tree li a:hover+ul::before, 
+        .tree li a:hover+ul ul::before{
+            border-color:  #b45309;
+        }
+        
+        /* Music Control Button */
+        #music-control {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 50px;
+            height: 50px;
+            background-color: rgba(139, 69, 19, 0.8);
+            color: white;
+            border-radius: 50%;
+            border: 2px solid white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            z-index: 1000;
+            transition: background-color 0.3s;
+        }
+        #music-control:hover {
+            background-color: rgba(160, 82, 45, 1);
+        }
+
+        /* Gemini Feature Styles */
+        .gemini-container {
+            background-color: rgba(255, 255, 255, 0.7);
+            border: 2px dashed #a0522d;
+            border-radius: 0.5rem;
+            padding: 1rem;
+            margin-top: 1.5rem;
+        }
+        .gemini-response {
+            background-color: #fffaf0;
+            border-radius: 0.5rem;
+            padding: 1rem;
+            margin-top: 1rem;
+            min-height: 100px;
+            white-space: pre-wrap; /* To respect newlines from the API */
+        }
+        .loader {
+            border: 4px solid #f3f3f3;
+            border-radius: 50%;
+            border-top: 4px solid #a0522d;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 1rem auto;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body class="javanese-bg">
+
+    <!-- Global Audio Player -->
+    <audio id="background-music" loop>
+        <source src="/assets/audio/gamelan.mp3" type="audio/mpeg">
+        Browser Anda tidak mendukung elemen audio.
+    </audio>
+    
+    <!-- Music Control Button -->
+    <div id="music-control">
+        <i id="music-icon" class="fas fa-volume-mute"></i>
+    </div>
+
+    <!-- Progress Bar -->
+    <div id="progress-bar-container" class="fixed top-0 left-0 w-full h-2 bg-gray-300/50 z-50">
+        <div id="progress-bar-fill" class="progress-bar-fill" style="width: 0%;"></div>
+    </div>
+    <div class="absolute top-2 left-2 text-xs text-amber-900 font-bold z-50" id="progress-text">0%</div>
+
+    <!-- Custom Cursor -->
+    <div id="cursor-sparkle" class="cursor-sparkle"></div>
+
+    <!-- Main App Container -->
+    <div id="app">
+
+        <!-- 1. Landing Page -->
+        <section id="landing-page" class="h-screen w-full flex flex-col justify-center items-center text-center text-white p-4 landing-bg">
+            <h1 class="text-5xl md:text-7xl font-bold mb-4" style="text-shadow: 2px 2px 8px rgba(0,0,0,0.8);">Warisan Wayang Jawa</h1>
+            <p class="text-xl md:text-2xl mb-8 max-w-2xl" style="text-shadow: 1px 1px 4px rgba(0,0,0,0.8);">Temukan Kisah, Filosofi, dan Keindahan di Balik Wayang Ikonik.</p>
+            <button id="start-explore-btn" class="btn-primary text-xl">Mulai Jelajahi</button>
+        </section>
+
+        <!-- 2. Main Page -->
+        <section id="main-page" class="hidden p-4 md:p-8">
+            <header class="text-center mb-8">
+                <h2 class="text-4xl font-bold text-amber-900">Galeri Wayang</h2>
+                <p class="text-lg text-amber-800">Pilih tokoh wayang untuk memulai petualangan Anda.</p>
+                 <div class="flex justify-center gap-4 mt-4">
+                    <button id="show-favorites-btn" class="bg-yellow-500 text-amber-900 font-semibold py-2 px-4 rounded-lg shadow-md hover:bg-yellow-600 transition-colors"><i class="fas fa-star"></i> Lihat Favorit</button>
+                    <button id="show-silsilah-btn" class="bg-green-600 text-white font-semibold py-2 px-4 rounded-lg shadow-md hover:bg-green-700 transition-colors"><i class="fas fa-sitemap"></i> Pohon Silsilah</button>
+                 </div>
+            </header>
+
+            <!-- Filter Section -->
+            <div id="filter-container" class="bg-white/50 p-4 rounded-lg shadow-md mb-8 flex flex-wrap gap-4 justify-center">
+                <select id="filter-origin" class="p-2 rounded border-amber-700 bg-white">
+                    <option value="all">Semua Asal Cerita</option>
+                    <option value="Mahabharata">Mahabharata</option>
+                    <option value="Ramayana">Ramayana</option>
+                    <option value="Punakawan">Punakawan</option>
+                    <option value="Cerita Panji">Cerita Panji</option>
+                </select>
+                <select id="filter-role" class="p-2 rounded border-amber-700 bg-white">
+                    <option value="all">Semua Peran</option>
+                    <option value="Ksatria">Ksatria</option>
+                    <option value="Abdi">Abdi</option>
+                    <option value="Dewa">Dewa</option>
+                    <option value="Putri">Putri</option>
+                    <option value="Raksasa">Raksasa</option>
+                </select>
+                <button id="filter-btn" class="bg-amber-800 text-white px-4 py-2 rounded-lg hover:bg-amber-900">Saring</button>
+                <button id="reset-filter-btn" class="bg-gray-500 text-white px-4 py-2 rounded-lg hover:bg-gray-600">Reset</button>
+            </div>
+
+            <div id="wayang-grid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-8">
+                <!-- Wayang cards will be injected here by JS -->
+            </div>
+             <div id="finish-exploring-container" class="text-center my-12 hidden">
+                <button id="trigger-quiz-btn" class="bg-green-600 text-white font-bold py-3 px-8 rounded-lg shadow-lg transform transition-transform duration-300 hover:scale-105 hover:bg-green-700 text-lg">Selesaikan Penjelajahan & Ikuti Kuis</button>
+            </div>
+        </section>
+
+        <!-- 3. Detail Page -->
+        <section id="detail-page" class="hidden p-4 md:p-8">
+            <button id="back-to-main-btn" class="btn-primary mb-8"><i class="fas fa-arrow-left"></i> Kembali</button>
+            <div id="detail-content" class="grid grid-cols-1 lg:grid-cols-12 gap-8 bg-white/60 p-6 rounded-xl shadow-lg">
+                <!-- Detail content will be injected here by JS -->
+            </div>
+        </section>
+        
+        <!-- 4. Silsilah Page -->
+        <section id="silsilah-page" class="hidden p-4 md:p-8">
+            <header class="text-center mb-8">
+                <h2 class="text-4xl font-bold text-amber-900">Pohon Silsilah Pandawa</h2>
+                <p class="text-lg text-amber-800">Jelajahi hubungan keluarga para ksatria Mahabharata.</p>
+            </header>
+            <div class="w-full overflow-x-auto">
+                <div id="silsilah-content" class="tree">
+                    <!-- Silsilah content will be injected here by JS -->
+                </div>
+            </div>
+            <div class="text-center mt-8">
+                <button id="back-to-main-from-silsilah-btn" class="btn-primary"><i class="fas fa-arrow-left"></i> Kembali ke Galeri</button>
+            </div>
+        </section>
+
+        <!-- 6. Favorites Page -->
+        <section id="favorites-page" class="hidden p-4 md:p-8">
+            <header class="text-center mb-8">
+                <h2 class="text-4xl font-bold text-amber-900">Tokoh Favorit Anda</h2>
+                <p class="text-lg text-amber-800">Koleksi tokoh wayang yang telah Anda tandai.</p>
+            </header>
+            <div id="favorites-grid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+                <!-- Favorite characters will be injected here -->
+            </div>
+             <div class="text-center mt-8">
+                <button id="back-to-main-from-fav-btn" class="btn-primary"><i class="fas fa-arrow-left"></i> Kembali ke Galeri</button>
+            </div>
+        </section>
+
+        <!-- 9. Closing Page -->
+        <section id="closing-page" class="hidden h-screen w-full flex flex-col justify-center items-center text-center p-4 javanese-bg">
+            <h2 class="text-4xl md:text-5xl font-bold text-amber-900 mb-4">Terima Kasih!</h2>
+            <p class="text-xl text-amber-800 max-w-2xl mb-8">Anda telah ikut serta dalam melestarikan budaya adiluhung Jawa melalui penjelajahan ini. Semoga warisan ini tetap hidup dan menginspirasi.</p>
+            <button id="restart-explore-btn" class="btn-primary text-xl">Jelajahi Ulang</button>
+        </section>
+
+    </div>
+
+    <!-- 8. Guide Modal -->
+    <div id="guide-modal" class="hidden fixed inset-0 bg-black/70 flex justify-center items-center z-50 p-4">
+        <div class="bg-white rounded-lg p-8 max-w-lg w-full text-gray-800 relative">
+            <h3 class="text-2xl font-bold mb-4 text-amber-900">Panduan Jelajah</h3>
+            <p class="mb-2">Selamat datang di dunia Wayang!</p>
+            <ul class="list-disc list-inside mb-6 space-y-2">
+                <li>Pilih <strong>tokoh wayang</strong> di halaman utama untuk melihat detailnya.</li>
+                <li>Gunakan <strong>fitur filter</strong> untuk mencari tokoh berdasarkan cerita atau peran.</li>
+                <li>Tekan ikon <strong>bintang (⭐)</strong> untuk menyimpan tokoh favorit Anda.</li>
+                <li>Perhatikan <strong>progress bar</strong> di atas untuk melihat sejauh mana penjelajahan Anda.</li>
+            </ul>
+            <button id="close-guide-btn" class="btn-primary w-full">Mengerti, Mulai Sekarang!</button>
+        </div>
+    </div>
+
+    <!-- 5. Quiz Modal -->
+    <div id="quiz-modal" class="hidden fixed inset-0 bg-black/70 flex justify-center items-center z-50 p-4">
+        <div class="bg-white rounded-lg p-8 max-w-lg w-full text-gray-800 relative">
+            <div id="quiz-content">
+                <h3 class="text-2xl font-bold mb-4 text-amber-900">Kuis Budaya Singkat</h3>
+                <div id="quiz-question" class="text-lg mb-4"></div>
+                <div id="quiz-options"></div>
+            </div>
+            <div id="quiz-result" class="hidden text-center">
+                <h3 class="text-2xl font-bold mb-4 text-amber-900">Hasil Kuis</h3>
+                <p id="quiz-score" class="text-xl mb-4"></p>
+                <p id="quiz-message" class="mb-6"></p>
+                <div class="flex gap-4 justify-center">
+                    <button id="retry-quiz-btn" class="bg-blue-600 text-white font-bold py-2 px-4 rounded-lg hover:bg-blue-700">Ulangi Kuis</button>
+                    <button id="finish-journey-btn" class="btn-primary">Selesai Menjelajah</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+    // --- DATA ---
+    const wayangData = {
+        "wayang-kulit": {
+            name: "Wayang Kulit",
+            description: "Teater bayangan kulit purwa, sumber cerita dari Mahabharata dan Ramayana.",
+            characters: [
+                { 
+                    id: "arjuna", 
+                    name: "Arjuna", 
+                    image: "https://i.pinimg.com/474x/85/58/1f/85581faa4dfe8176e7045e63ffa73634.jpg", 
+                    origin: "Mahabharata", 
+                    role: "Ksatria", 
+                    moralValue: "Keadilan, Kebijaksanaan, Pengendalian Diri", 
+                    description: "Arjuna adalah Pandawa ketiga, putra Pandu dan Kunti. Ia dikenal sebagai ksatria paling mahir dalam olah panah dan dianggap sebagai 'Lelananging Jagad' atau pria sejati di dunia. Sifatnya yang tekun belajar, rendah hati, dan selalu membela kebenaran menjadikannya panutan. Arjuna juga merupakan tokoh sentral dalam dialog Bhagawadgita, di mana ia menerima wejangan suci dari Sri Kresna sebelum perang Bharatayudha.", 
+                    motifs: [
+                        { name: "Panah Pasopati", detail: "Senjata pusaka anugerah Dewa Siwa, simbol ketajaman batin dan fokus." }, 
+                        { name: "Wajah Tampan", detail: "Melambangkan keindahan hati dan perilaku yang luhur." }
+                    ],
+                    weapons: [
+                        { name: "Panah Pasopati", image: "https://d102yvplb1ma43.cloudfront.net/wp-content/uploads/2022/05/20142938/Pasupati-Aditya-scaled.jpg", description: "Pusaka terkuat Arjuna, sebuah panah yang tidak pernah meleset dari sasarannya. Melambangkan kekuatan doa dan fokus yang tajam untuk mencapai tujuan." }
+                    ]
+                },
+                { 
+                    id: "gatotkaca", 
+                    name: "Gatotkaca", 
+                    image: "https://i.pinimg.com/originals/b9/7b/a9/b97ba96a43582e8840ebe451b5f3f2a2.jpg", 
+                    origin: "Mahabharata", 
+                    role: "Ksatria", 
+                    moralValue: "Keberanian, Pengorbanan, Patriotisme", 
+                    description: "Putra Bimasena dan Arimbi, Gatotkaca adalah ksatria perkasa dari Pringgandani. Sejak lahir, ia telah ditempa di Kawah Candradimuka yang memberinya kesaktian 'otot kawat, tulang besi'. Ia dapat terbang tanpa sayap dan menjadi andalan para Pandawa di udara. Pengorbanannya dalam perang Bharatayudha menjadi simbol tertinggi dari patriotisme dan pembelaan terhadap negara.", 
+                    motifs: [
+                        { name: "Otot Kawat Tulang Besi", detail: "Melambangkan kekuatan fisik dan mental yang luar biasa." }, 
+                        { name: "Sayap", detail: "Kemampuannya untuk terbang melambangkan kewaspadaan dan kecepatan bertindak." }
+                    ] 
+                },
+                { 
+                    id: "semar", 
+                    name: "Semar", 
+                    image: "https://upload.wikimedia.org/wikipedia/commons/3/3c/Wayang_Kulit_of_Semar_crop.jpg", 
+                    origin: "Punakawan", 
+                    role: "Abdi", 
+                    moralValue: "Kearifan, Kesederhanaan, Pengayoman", 
+                    description: "Semar adalah tokoh paling misterius dan bijaksana dalam pewayangan Jawa. Ia merupakan penjelmaan dewa Batara Ismaya yang turun ke dunia untuk membimbing para ksatria berjiwa luhur. Meskipun penampilannya sederhana sebagai abdi, ia adalah pamomong (pembimbing) sejati yang nasihatnya selalu didengar. Semar adalah simbol dari 'manunggaling kawula gusti', bersatunya hamba dengan Tuhannya.", 
+                    motifs: [
+                        { name: "Kuncung Putih", detail: "Simbol dari pikiran yang jernih dan suci." }, 
+                        { name: "Wajah Tersenyum Bijak", detail: "Melambangkan kebijaksanaan dan ketenangan dalam menghadapi segala masalah." }, 
+                        { name: "Bokong Besar", detail: "Simbol bahwa ia adalah penampung segala keluh kesah rakyat kecil." }
+                    ] 
+                },
+                { 
+                    id: "bima", 
+                    name: "Bima", 
+                    image: "https://static.promediateknologi.id/crop/0x0:0x0/0x0/webp/photo/p2/214/2024/07/29/Sambut-Tahun-Baru-2018-DPRD-DIY-Gelar-Wayang-Kulit-dengan-Lakon-Banjaran-Bima-Star-Jogja-FM-2003932352.jpeg", 
+                    origin: "Mahabharata", 
+                    role: "Ksatria", 
+                    moralValue: "Kejujuran, Keberanian, Keteguhan", 
+                    description: "Bima atau Werkudara adalah Pandawa kedua yang paling kuat. Ia memiliki sifat yang lugas, jujur, dan tidak pernah menggunakan bahasa halus (krama inggil) kepada siapa pun kecuali gurunya, Dewa Ruci. Keteguhan hatinya dalam mencari kebenaran (air kehidupan) dalam lakon Dewa Ruci menjadi simbol perjalanan spiritual tertinggi.", 
+                    motifs: [
+                        { name: "Kuku Pancanaka", detail: "Senjata di ibu jarinya yang tajam, melambangkan kekuatan untuk menyingkirkan kebatilan." }, 
+                        { name: "Kain Poleng", detail: "Kain corak hitam-putih, melambangkan kemampuannya membedakan benar dan salah (Rwa Bhineda)." }
+                    ],
+                    weapons: [
+                        { name: "Gada Rujakpolo", image: "https://i.pinimg.com/originals/ee/03/52/ee035272a0d788770b0244583125e173.jpg", description: "Gada sakti yang dapat menghancurkan batu dan besi. Simbol kekuatan fisik yang digunakan untuk memberantas angkara murka." },
+                        { name: "Kuku Pancanaka", image: "https://qph.cf2.quoracdn.net/main-qimg-803df35a903c7f8a7e3760361245089e-lq", description: "Kuku jempolnya yang sekeras baja dan setajam pisau. Melambangkan ketajaman batin dan kemampuan untuk mengupas segala kebohongan." }
+                    ]
+                }
+            ]
+        },
+        "wayang-golek": {
+            name: "Wayang Golek",
+            description: "Berasal dari Sunda, wayang tiga dimensi yang terbuat dari kayu.",
+            characters: [
+                { id: "cepot", name: "Astrajingga (Cepot)", image: "https://upload.wikimedia.org/wikipedia/commons/8/8a/Cepot_in_wayang_golek_form%2C_2015-05-14_03.jpg", origin: "Punakawan", role: "Abdi", moralValue: "Kritik Sosial, Humor", description: "Putra tertua Semar dalam versi Sunda, Cepot adalah representasi suara rakyat jelata. Sifatnya yang humoris, kritis, dan terkadang usil, digunakannya untuk menyampaikan kebenaran dan kritik sosial kepada para penguasa tanpa rasa takut. Ia adalah simbol keberanian dalam menyuarakan aspirasi.", motifs: [{ name: "Wajah Merah", detail: "Simbol keberanian dan semangat yang membara." }, { name: "Gigi Tonggos", detail: "Mencerminkan kesederhanaan dan sifat apa adanya." }] }
+            ]
+        },
+        "wayang-klitik": {
+            name: "Wayang Klitik",
+            description: "Wayang pipih dari kayu, menimbulkan suara 'klitik-klitik' saat dimainkan.",
+            characters: [
+                { 
+                    id: "damarwulan", 
+                    name: "Damarwulan", 
+                    image: "https://upload.wikimedia.org/wikipedia/commons/e/e6/COLLECTIE_TROPENMUSEUM_Platte_houten_wajangpop_mogelijk_Damar_Wulan_TMnr_809-30.jpg", 
+                    origin: "Cerita Panji", 
+                    role: "Ksatria", 
+                    moralValue: "Kepahlawanan, Kesetiaan", 
+                    description: "Seorang pahlawan legendaris dari era Majapahit. Awalnya ia adalah seorang abdi, namun berkat keberanian dan kesetiaannya kepada Ratu Kencana Wungu, ia berhasil mengalahkan adipati Blambangan, Minak Jinggo. Kisahnya adalah lambang bahwa status sosial bukanlah penghalang untuk menjadi pahlawan.", 
+                    motifs: [{ name: "Gada Wesi Kuning", detail: "Senjata pusaka yang digunakannya untuk mengalahkan musuh, simbol kekuatan yang didasari kebenaran." }],
+                    weapons: [
+                        { name: "Gada Wesi Kuning", image: "https://www.dictio.id/uploads/db3342/original/3X/a/b/ab895e695f333364f738b03939371e162c185a3c.jpeg", description: "Gada sakti yang menjadi kunci kemenangannya atas Minak Jinggo. Melambangkan bahwa kekuatan sejati berasal dari kebenaran dan keadilan." }
+                    ]
+                }
+            ]
+        },
+        "wayang-beber": {
+            name: "Wayang Beber",
+            description: "Bentuk wayang tertua, berupa lukisan pada lembaran kain yang dibeberkan.",
+            characters: [
+                { id: "panji", name: "Panji Asmorobangun", image: "https://www.gudeg.net/cni-content/uploads/files/images/5%28244%29.jpg", origin: "Cerita Panji", role: "Ksatria", moralValue: "Cinta, Petualangan", description: "Pangeran dari Kerajaan Jenggala yang berkelana menyamar sebagai rakyat biasa untuk menemukan kekasih hatinya, Dewi Sekartaji. Siklus cerita Panji menyebar ke seluruh Asia Tenggara dan menjadi inspirasi banyak karya seni. Ia adalah simbol petualangan, cinta sejati, dan penemuan jati diri.", motifs: [{ name: "Topeng", detail: "Sering digambarkan dengan topeng yang melambangkan penyamaran dalam perjalanannya mencari cinta." }] },
+                { id: "dewi-sekartaji", name: "Dewi Sekartaji", image: "https://assets-a1.kompasiana.com/items/album/2024/08/01/img-20240801-105408-66ab490f34777c1ca8267ef2.jpg?t=o&v=770", origin: "Cerita Panji", role: "Putri", moralValue: "Kesetiaan, Kesabaran, Kelembutan", description: "Putri dari Kerajaan Kediri, juga dikenal sebagai Candra Kirana. Ia adalah kekasih Panji yang terpisah karena intrik istana. Kesetiaan dan kesabarannya dalam menanti sang kekasih menjadi inti dari cerita. Dewi Sekartaji adalah simbol dari kekuatan cinta yang tulus dan kesabaran yang tak terbatas.", motifs: [{ name: "Wajah Lembut", detail: "Melambangkan keanggunan, kesabaran, dan hati yang tulus." }, { name: "Sanggul Anggun", detail: "Simbol dari statusnya sebagai putri kerajaan dan martabat seorang wanita." }] }
+            ]
+        },
+        "wayang-orang": {
+            name: "Wayang Orang",
+            description: "Drama tari yang dimainkan oleh manusia, dengan kostum dan riasan khas wayang.",
+            characters: [
+                { 
+                    id: "srikandi", 
+                    name: "Srikandi", 
+                    image: "https://indonesiakaya.com/wp-content/uploads/2020/11/IMG5695.jpg", 
+                    origin: "Mahabharata", 
+                    role: "Ksatria", 
+                    moralValue: "Emanisipasi, Keberanian", 
+                    description: "Prajurit wanita yang gagah berani, murid dari Arjuna. Ia adalah reinkarnasi dari Dewi Amba yang bersumpah akan membunuh Bisma. Dalam perang Bharatayudha, Srikandi menjadi garda terdepan yang membuat Bisma enggan melawan, sehingga Arjuna dapat mengalahkannya. Ia adalah simbol emansipasi, kesetaraan, dan keberanian wanita.", 
+                    motifs: [
+                        { name: "Busur Panah", detail: "Keahliannya memanah menunjukkan fokus, ketepatan, dan kekuatan seorang wanita." }, 
+                        { name: "Kostum Prajurit", detail: "Melambangkan kesetaraan gender dan keberanian dalam membela kebenaran." }
+                    ],
+                    weapons: [
+                        { name: "Panah Hrusangkali", image: "https://www.goodnewsfromindonesia.id/uploads/post/large-srikandi-8a22102120e2a35222e4c7e098e57315.jpg", description: "Panah andalannya yang diajarkan oleh Arjuna. Melambangkan bahwa ilmu dan keahlian tidak memandang gender." }
+                    ]
+                }
+            ]
+        }
+    };
+
+    const silsilahData = {
+        name: 'Pandu',
+        id: null, // No link for the root
+        children: [
+            {
+                name: 'Punakawan',
+                id: null,
+                children: [{name: 'Semar', id: 'semar'}]
+            },
+            {
+                name: 'Pandawa',
+                id: null,
+                children: [
+                    { name: 'Bima', id: 'bima', children: [{ name: 'Gatotkaca', id: 'gatotkaca' }] },
+                    { name: 'Arjuna', id: 'arjuna', children: [] },
+                    { name: 'Srikandi', id: 'srikandi', children: [] } // Added as spouse/ally for context
+                ]
+            }
+        ]
+    };
+
+    const quizQuestions = [
+        { question: "Siapakah putra Bimasena yang dikenal dengan julukan 'otot kawat tulang besi'?", answer: "Gatotkaca" },
+        { question: "Senjata pusaka andalan Arjuna adalah...", answer: "Panah Pasopati" },
+        { question: "Tokoh Punakawan dari Sunda yang kritis dan jenaka adalah...", answer: "Astrajingga (Cepot)" },
+        { question: "Wayang yang dimainkan oleh manusia disebut...", answer: "Wayang Orang" },
+        { question: "Wayang tertua yang berupa lukisan pada kain adalah...", answer: "Wayang Beber" },
+        { question: "Siapakah prajurit wanita yang ahli memanah dalam Mahabharata?", answer: "Srikandi" },
+        { question: "Kisah Damarwulan berasal dari era kerajaan ...", answer: "Majapahit" },
+        { question: "Siapakah pamomong (pembimbing) para Pandawa yang merupakan jelmaan dewa?", answer: "Semar"},
+        { question: "Senjata di kuku Bima yang sangat sakti disebut...", answer: "Kuku Pancanaka"}
+    ];
+
+    // --- SCRIPT LOGIC ---
+    // PENTING: Masukkan API Key Gemini Anda di sini jika menjalankan file secara lokal
+    const USER_API_KEY = "AIzaSyBBYq7hNvoc-i6rHgKHCBe37BREpdzySiw"; // <-- DAPATKAN DARI GOOGLE AI STUDIO
+
+    let currentPage = 'landing-page';
+    let favorites = JSON.parse(localStorage.getItem('wayangFavorites')) || [];
+    let visitedPages = new Set();
+    let totalPages = 1; // landing page
+    Object.values(wayangData).forEach(type => {
+        totalPages += type.characters.length;
+    });
+    totalPages += 4; // main, favorites, silsilah, closing
+
+    const pages = document.querySelectorAll('#app > section');
+    const guideModal = document.getElementById('guide-modal');
+    const quizModal = document.getElementById('quiz-modal');
+    const cursorSparkle = document.getElementById('cursor-sparkle');
+    const backgroundMusic = document.getElementById('background-music');
+    const musicControl = document.getElementById('music-control');
+    const musicIcon = document.getElementById('music-icon');
+
+    const showPage = (pageId) => {
+        let elementIdToShow = pageId;
+        if (pageId.startsWith('detail-')) elementIdToShow = 'detail-page';
+        if (pageId.startsWith('silsilah')) elementIdToShow = 'silsilah-page';
+
+        pages.forEach(page => page.classList.add('hidden'));
+        
+        const pageElement = document.getElementById(elementIdToShow);
+        if (pageElement) pageElement.classList.remove('hidden');
+        else { console.error(`Element with ID "${elementIdToShow}" not found.`); return; }
+        
+        currentPage = pageId; 
+        if (pageId !== 'landing-page') visitedPages.add(pageId);
+        updateProgressBar();
+
+        const finishContainer = document.getElementById('finish-exploring-container');
+        if(pageId === 'main-page' && visitedPages.size > 2) finishContainer.classList.remove('hidden');
+        else finishContainer.classList.add('hidden');
+    };
+
+    const renderMainPage = (filteredData = wayangData) => {
+        const grid = document.getElementById('wayang-grid');
+        grid.innerHTML = '';
+        let characterCount = 0;
+        for (const typeKey in filteredData) {
+            const type = filteredData[typeKey];
+            type.characters.forEach(char => {
+                characterCount++;
+                const isFav = favorites.includes(char.id);
+                const card = document.createElement('div');
+                card.className = 'bg-white/80 rounded-lg shadow-lg overflow-hidden card-hover relative';
+                card.innerHTML = `
+                    <img src="${char.image}" alt="${char.name}" class="w-full h-64 object-cover" onerror="this.onerror=null;this.src='https://placehold.co/400x600/8B4513/FFFFFF?text=${char.name}';">
+                    <div class="p-4">
+                        <h3 class="text-2xl font-bold text-amber-900">${char.name}</h3>
+                        <p class="text-sm text-amber-800">${type.name}</p>
+                        <p class="text-sm italic text-gray-600">${char.role} - ${char.origin}</p>
+                    </div>
+                    <button class="favorite-btn absolute top-2 right-2 text-2xl" data-id="${char.id}">
+                        <i class="${isFav ? 'fas' : 'far'} fa-star text-yellow-400" style="text-shadow: 0 0 3px black;"></i>
+                    </button>
+                `;
+                card.addEventListener('click', (e) => {
+                    if (!e.target.closest('.favorite-btn')) {
+                        const correctTypeKey = Object.keys(wayangData).find(key => wayangData[key].characters.some(c => c.id === char.id));
+                        renderDetailPage(correctTypeKey, char.id);
+                    }
+                });
+                grid.appendChild(card);
+            });
+        }
+        if (characterCount === 0) grid.innerHTML = `<p class="col-span-full text-center text-gray-600">Tidak ada tokoh yang cocok dengan kriteria filter Anda.</p>`;
+        addFavoriteButtonListeners();
+    };
+
+    const renderDetailPage = (typeKey, charId) => {
+        const character = wayangData[typeKey].characters.find(c => c.id === charId);
+        const detailContent = document.getElementById('detail-content');
+        const isFav = favorites.includes(character.id);
+
+        let weaponsHtml = '';
+        if (character.weapons && character.weapons.length > 0) {
+            weaponsHtml = `
+                <h4 class="font-bold text-lg text-amber-900 mt-6 mb-2">Senjata Pusaka</h4>
+                <div id="weapons-list" class="space-y-2">
+                    ${character.weapons.map(w => `
+                        <div class="weapon-card">
+                            <h5 class="font-bold text-amber-800">${w.name}</h5>
+                            <img src="${w.image}" alt="${w.name}" class="w-full h-32 object-contain my-2 rounded-md" onerror="this.style.display='none'">
+                            <p class="text-sm">${w.description}</p>
+                        </div>
+                    `).join('')}
+                </div>
+            `;
+        }
+
+        const geminiSectionHtml = `
+            <div class="gemini-container lg:col-span-12 mt-6">
+                <h3 class="text-2xl font-bold text-amber-900 mb-4">✨ Tanya Sang Dalang</h3>
+                <div class="mb-4">
+                    <button id="generate-philosophy-btn" class="btn-primary w-full mb-2">Hasilkan Ringkasan Filosofis</button>
+                    <div id="gemini-philosophy-response" class="gemini-response hidden"></div>
+                </div>
+                <div>
+                    <label for="custom-question-input" class="font-semibold text-amber-800">Punya pertanyaan lain?</label>
+                    <textarea id="custom-question-input" class="w-full p-2 mt-1 border border-amber-700 rounded-md bg-white" rows="2" placeholder="Contoh: Ceritakan kisah persahabatan Semar dan Arjuna..."></textarea>
+                    <button id="ask-custom-question-btn" class="btn-primary w-full mt-2">Tanyakan</button>
+                    <div id="gemini-custom-response" class="gemini-response hidden mt-2"></div>
+                </div>
+                <div id="gemini-loader" class="loader hidden"></div>
+            </div>
+        `;
+
+        detailContent.innerHTML = `
+            <div class="lg:col-span-4 flex flex-col items-center">
+                <img id="detail-image" src="${character.image}" alt="${character.name}" class="rounded-lg shadow-xl max-h-[500px] object-contain transition-all duration-300" onerror="this.onerror=null;this.src='https://placehold.co/400x600/8B4513/FFFFFF?text=${character.name}';">
+            </div>
+            <div class="lg:col-span-8">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div class="md:col-span-1">
+                        <h2 class="text-4xl font-bold text-amber-900 mb-2 flex items-center gap-3">${character.name}</h2>
+                        <p class="text-lg text-amber-800 mb-4">${character.role} dari kisah ${character.origin}</p>
+                        <div class="bg-amber-100/50 p-4 rounded-lg mb-4">
+                            <h4 class="font-bold text-lg text-amber-900">Nilai Moral:</h4>
+                            <p>${character.moralValue}</p>
+                        </div>
+                        <h4 class="font-bold text-lg text-amber-900">Deskripsi</h4>
+                        <p class="mb-4">${character.description}</p>
+                    </div>
+                    <div class="md:col-span-1">
+                         <button class="favorite-btn text-lg p-2 rounded border border-amber-700 flex items-center gap-2 mb-4 hover:bg-amber-100 transition-colors" data-id="${character.id}">
+                            <i class="${isFav ? 'fas' : 'far'} fa-star text-yellow-400"></i> <span class="font-semibold">${isFav ? 'Hapus dari Favorit' : 'Tambah ke Favorit'}</span>
+                        </button>
+                        <h4 class="font-bold text-lg text-amber-900 mb-2">Motif & Makna Visual:</h4>
+                        <div id="motifs-list" class="space-y-2">
+                            ${character.motifs.map(m => `<div class="motif-item" data-detail="${m.detail}">${m.name}</div>`).join('')}
+                        </div>
+                        <div id="motif-detail" class="mt-4 p-3 bg-white rounded-md shadow hidden"></div>
+                        ${weaponsHtml}
+                    </div>
+                </div>
+            </div>
+            ${geminiSectionHtml}
+        `;
+        showPage(`detail-${charId}`);
+        addDetailEventListeners(character);
+    };
+
+    const buildSilsilah = (node) => {
+        let html = `<li><a href="#" class="silsilah-node" data-id="${node.id}">${node.name}</a>`;
+        if (node.children && node.children.length > 0) {
+            html += '<ul>';
+            node.children.forEach(child => {
+                html += buildSilsilah(child);
+            });
+            html += '</ul>';
+        }
+        html += '</li>';
+        return html;
+    };
+
+    const renderSilsilahPage = () => {
+        const content = document.getElementById('silsilah-content');
+        content.innerHTML = `<ul>${buildSilsilah(silsilahData)}</ul>`;
+        showPage('silsilah-page');
+        document.querySelectorAll('.silsilah-node').forEach(node => {
+            if (node.dataset.id !== 'null') {
+                node.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const charId = node.dataset.id;
+                    const typeKey = Object.keys(wayangData).find(key => wayangData[key].characters.some(c => c.id === charId));
+                    if (typeKey) {
+                        renderDetailPage(typeKey, charId);
+                    }
+                });
+            } else {
+                 node.classList.add('cursor-default');
+            }
+        });
+    };
+    
+    const renderFavoritesPage = () => {
+        const grid = document.getElementById('favorites-grid');
+        grid.innerHTML = '';
+        if (favorites.length === 0) {
+            grid.innerHTML = `<p class="col-span-full text-center text-gray-600">Anda belum memiliki tokoh favorit. Tekan ikon ⭐ untuk menambahkan.</p>`;
+        } else {
+            for (const typeKey in wayangData) {
+                wayangData[typeKey].characters.forEach(char => {
+                    if (favorites.includes(char.id)) {
+                         const card = document.createElement('div');
+                         card.className = 'bg-white/80 rounded-lg shadow-lg overflow-hidden card-hover text-center p-4';
+                         card.innerHTML = `
+                            <img src="${char.image}" alt="${char.name}" class="w-32 h-32 object-cover rounded-full mx-auto mb-4 border-4 border-amber-300" onerror="this.onerror=null;this.src='https://placehold.co/128x128/8B4513/FFFFFF?text=${char.name[0]}';">
+                            <h3 class="text-xl font-bold text-amber-900">${char.name}</h3>
+                            <p class="text-sm text-amber-800">${wayangData[typeKey].name}</p>
+                            <button class="unfavorite-btn mt-2 text-red-500 hover:text-red-700" data-id="${char.id}"><i class="fas fa-trash"></i> Hapus</button>
+                         `;
+                         card.querySelector('.unfavorite-btn').addEventListener('click', (e) => {
+                             e.stopPropagation();
+                             toggleFavorite(char.id);
+                             renderFavoritesPage();
+                         });
+                         grid.appendChild(card);
+                    }
+                });
+            }
+        }
+        showPage('favorites-page');
+    };
+
+    const addDetailEventListeners = (character) => {
+        addFavoriteButtonListeners();
+        addMotifListeners();
+        const philosophyBtn = document.getElementById('generate-philosophy-btn');
+        philosophyBtn.addEventListener('click', () => handleGeneratePhilosophy(character));
+
+        const customQuestionBtn = document.getElementById('ask-custom-question-btn');
+        customQuestionBtn.addEventListener('click', () => handleCustomQuestion(character));
+    };
+
+    const setupEventListeners = () => {
+        document.getElementById('start-explore-btn').addEventListener('click', () => {
+            guideModal.classList.remove('hidden');
+            // Try to play music on first user interaction
+            const playPromise = backgroundMusic.play();
+            if (playPromise !== undefined) {
+                playPromise.then(() => {
+                    musicIcon.classList.remove('fa-volume-mute');
+                    musicIcon.classList.add('fa-volume-up');
+                }).catch(error => {
+                    console.log("Autoplay dicegah oleh browser. Musik akan dimulai saat tombol kontrol diklik.");
+                });
+            }
+        });
+        document.getElementById('close-guide-btn').addEventListener('click', () => { guideModal.classList.add('hidden'); showPage('main-page'); });
+        document.getElementById('back-to-main-btn').addEventListener('click', () => showPage('main-page'));
+        document.getElementById('back-to-main-from-silsilah-btn').addEventListener('click', () => showPage('main-page'));
+        document.getElementById('back-to-main-from-fav-btn').addEventListener('click', () => showPage('main-page'));
+        document.getElementById('show-favorites-btn').addEventListener('click', renderFavoritesPage);
+        document.getElementById('show-silsilah-btn').addEventListener('click', renderSilsilahPage);
+        document.getElementById('restart-explore-btn').addEventListener('click', () => { visitedPages.clear(); visitedPages.add('landing-page'); updateProgressBar(); showPage('landing-page'); });
+        document.getElementById('trigger-quiz-btn').addEventListener('click', startQuiz);
+        document.getElementById('finish-journey-btn').addEventListener('click', () => { quizModal.classList.add('hidden'); showPage('closing-page'); });
+        document.getElementById('filter-btn').addEventListener('click', () => {
+            const origin = document.getElementById('filter-origin').value;
+            const role = document.getElementById('filter-role').value;
+            const filteredData = JSON.parse(JSON.stringify(wayangData));
+            for (const typeKey in filteredData) {
+                filteredData[typeKey].characters = filteredData[typeKey].characters.filter(char => (origin === 'all' || char.origin === origin) && (role === 'all' || char.role === role));
+                if (filteredData[typeKey].characters.length === 0) delete filteredData[typeKey];
+            }
+            renderMainPage(filteredData);
+        });
+        document.getElementById('reset-filter-btn').addEventListener('click', () => {
+            document.getElementById('filter-origin').value = 'all';
+            document.getElementById('filter-role').value = 'all';
+            renderMainPage();
+        });
+        document.getElementById('retry-quiz-btn').addEventListener('click', startQuiz);
+        
+        musicControl.addEventListener('click', () => {
+            if (backgroundMusic.paused) {
+                backgroundMusic.play();
+                musicIcon.classList.remove('fa-volume-mute');
+                musicIcon.classList.add('fa-volume-up');
+            } else {
+                backgroundMusic.pause();
+                musicIcon.classList.remove('fa-volume-up');
+                musicIcon.classList.add('fa-volume-mute');
+            }
+        });
+    };
+
+    const addMotifListeners = () => {
+        const motifItems = document.querySelectorAll('.motif-item');
+        const motifDetailBox = document.getElementById('motif-detail');
+        motifItems.forEach(item => {
+            item.addEventListener('click', () => {
+                motifDetailBox.textContent = item.dataset.detail;
+                motifDetailBox.classList.remove('hidden');
+                motifItems.forEach(i => i.classList.remove('bg-amber-800/20'));
+                item.classList.add('bg-amber-800/20');
+            });
+        });
+    };
+
+    const toggleFavorite = (charId) => {
+        const index = favorites.indexOf(charId);
+        if (index > -1) favorites.splice(index, 1);
+        else favorites.push(charId);
+        localStorage.setItem('wayangFavorites', JSON.stringify(favorites));
+        updateFavoriteIcons(charId);
+    };
+
+    const addFavoriteButtonListeners = () => {
+        document.querySelectorAll('.favorite-btn').forEach(btn => {
+            const newBtn = btn.cloneNode(true);
+            btn.parentNode.replaceChild(newBtn, btn);
+            newBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                toggleFavorite(newBtn.dataset.id);
+            });
+        });
+    };
+
+    const updateFavoriteIcons = (charId) => {
+        const isFav = favorites.includes(charId);
+        document.querySelectorAll(`.favorite-btn[data-id="${charId}"]`).forEach(btn => {
+            const icon = btn.querySelector('i');
+            icon.classList.toggle('fas', isFav);
+            icon.classList.toggle('far', !isFav);
+            const textSpan = btn.querySelector('span');
+            if (textSpan) textSpan.textContent = isFav ? 'Hapus dari Favorit' : 'Tambah ke Favorit';
+        });
+    };
+
+    const updateProgressBar = () => {
+        const percentage = totalPages > 0 ? Math.min(100, Math.round((visitedPages.size / totalPages) * 100)) : 0;
+        document.getElementById('progress-bar-fill').style.width = `${percentage}%`;
+        document.getElementById('progress-text').textContent = `${percentage}%`;
+    };
+
+    let currentQuestionIndex = 0, score = 0, quizSet = [];
+    const startQuiz = () => {
+        currentQuestionIndex = 0; score = 0;
+        quizSet = [...quizQuestions].sort(() => 0.5 - Math.random()).slice(0, 5);
+        document.getElementById('quiz-content').classList.remove('hidden');
+        document.getElementById('quiz-result').classList.add('hidden');
+        quizModal.classList.remove('hidden');
+        displayQuestion();
+    };
+
+    const displayQuestion = () => {
+        if (currentQuestionIndex < quizSet.length) {
+            const q = quizSet[currentQuestionIndex];
+            document.getElementById('quiz-question').textContent = q.question;
+            const optionsDiv = document.getElementById('quiz-options');
+            optionsDiv.innerHTML = '';
+            let options = [q.answer, ...quizQuestions.map(item => item.answer).filter(ans => ans !== q.answer).sort(() => 0.5 - Math.random()).slice(0, 3)];
+            options.sort(() => Math.random() - 0.5);
+            options.forEach(option => {
+                const button = document.createElement('button');
+                button.textContent = option;
+                button.className = 'quiz-option';
+                button.onclick = () => selectAnswer(option);
+                optionsDiv.appendChild(button);
+            });
+        } else showQuizResult();
+    };
+
+    const selectAnswer = (selectedOption) => {
+        if (selectedOption === quizSet[currentQuestionIndex].answer) score++;
+        currentQuestionIndex++;
+        displayQuestion();
+    };
+
+    const showQuizResult = () => {
+        document.getElementById('quiz-content').classList.add('hidden');
+        const resultDiv = document.getElementById('quiz-result');
+        resultDiv.classList.remove('hidden');
+        document.getElementById('quiz-score').textContent = `Skor Anda: ${score} dari ${quizSet.length}`;
+        let message = "Terus belajar, ya! Dunia wayang penuh dengan cerita menarik untuk digali.";
+        if (score === quizSet.length) message = "Luar biasa! Pengetahuan Anda tentang wayang sangat mendalam!";
+        else if (score >= 3) message = "Bagus sekali! Anda sudah mengenal banyak tentang dunia pewayangan.";
+        document.getElementById('quiz-message').textContent = message;
+    };
+    
+    // --- GEMINI API FUNCTIONS ---
+    const callGeminiAPI = async (prompt, responseElement) => {
+        const loader = document.getElementById('gemini-loader');
+        loader.classList.remove('hidden');
+        responseElement.classList.add('hidden');
+        responseElement.textContent = '';
+
+        const apiKey = USER_API_KEY; 
+        
+        if (!apiKey) {
+            responseElement.textContent = "Kesalahan: API Key tidak ditemukan. Silakan masukkan API Key Anda di dalam kode pada variabel USER_API_KEY.";
+            responseElement.classList.remove('hidden');
+            loader.classList.add('hidden');
+            return;
+        }
+
+        const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
+        
+        const payload = {
+            contents: [{
+                parts: [{ text: prompt }]
+            }]
+        };
+
+        try {
+            const response = await fetch(apiUrl, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload)
+            });
+
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+
+            const result = await response.json();
+            
+            if (result.candidates && result.candidates.length > 0 && result.candidates[0].content.parts.length > 0) {
+                const text = result.candidates[0].content.parts[0].text;
+                responseElement.textContent = text;
+            } else {
+                responseElement.textContent = "Maaf, tidak ada jawaban yang bisa dihasilkan saat ini.";
+            }
+        } catch (error) {
+            console.error("Error calling Gemini API:", error);
+            responseElement.textContent = "Terjadi kesalahan saat menghubungi Sang Dalang. Silakan coba lagi nanti.";
+        } finally {
+            loader.classList.add('hidden');
+            responseElement.classList.remove('hidden');
+        }
+    };
+
+    const handleGeneratePhilosophy = (character) => {
+        const prompt = `Sebagai seorang dalang ahli dari Jawa, jelaskan secara mendalam filosofi dan nilai-nilai moral dari tokoh wayang ${character.name}. Nilai moral utamanya adalah: ${character.moralValue}. Berikan contoh bagaimana nilai-nilai ini bisa diterapkan dalam kehidupan modern. Gunakan gaya bahasa yang puitis dan bijaksana.`;
+        const responseElement = document.getElementById('gemini-philosophy-response');
+        callGeminiAPI(prompt, responseElement);
+    };
+
+    const handleCustomQuestion = (character) => {
+        const inputElement = document.getElementById('custom-question-input');
+        const userQuestion = inputElement.value;
+        if (!userQuestion.trim()) {
+            alert("Silakan tulis pertanyaan Anda terlebih dahulu.");
+            return;
+        }
+        const prompt = `Anda adalah seorang dalang yang bijaksana. Jawab pertanyaan berikut mengenai tokoh wayang ${character.name} dengan gaya bercerita yang menarik: "${userQuestion}"`;
+        const responseElement = document.getElementById('gemini-custom-response');
+        callGeminiAPI(prompt, responseElement);
+        inputElement.value = ''; // Clear input after asking
+    };
+
+
+    // --- INITIALIZATION ---
+    const init = () => {
+        renderMainPage();
+        setupEventListeners();
+        visitedPages.add('landing-page');
+        updateProgressBar();
+    };
+
+    init();
+    </script>
+</body>
+</html>
